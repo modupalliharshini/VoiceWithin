@@ -74,19 +74,79 @@ document.addEventListener("DOMContentLoaded", function () {
 // HAMBURGER MENU TOGGLE
 // ======================
 
+(function() {
+  const hamb = document.querySelector('.hamb');
+  const navLinks = document.querySelector('.nav-links');
+  const header = document.querySelector('.nav');
 
-const hamb = document.querySelector(".hamb");
-const navLinks = document.querySelector(".nav-links");
+  if (!hamb || !navLinks) return;
 
-hamb.addEventListener("click", () => {
-  navLinks.classList.toggle("open");
-  hamb.classList.toggle("active");
-});
-
-// Close navbar when clicking a link (mobile)
-document.querySelectorAll("#nav-links a").forEach(link => {
-  link.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navLinks.classList.remove("active");
+  // Toggle hamburger menu
+  hamb.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent triggering outside click
+    hamb.classList.toggle('active');
+    navLinks.classList.toggle('open');
+    document.body.classList.toggle('menu-open');
+    hamb.setAttribute(
+      'aria-expanded',
+      navLinks.classList.contains('open') ? 'true' : 'false'
+    );
   });
-});
+
+  // Close menu & smooth scroll when clicking a nav item
+  navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const targetId = link.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
+      if (!targetSection) return;
+
+      // Close menu instantly
+      hamb.classList.remove('active');
+      navLinks.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      hamb.setAttribute('aria-expanded', 'false');
+
+      // Smooth scroll
+      const headerHeight = header ? header.offsetHeight : 0;
+      const targetPosition = targetSection.offsetTop - headerHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  // Close navbar when clicking outside
+  document.addEventListener('click', (e) => {
+    if (navLinks.classList.contains('open') &&
+        !navLinks.contains(e.target) &&
+        !hamb.contains(e.target)) {
+      hamb.classList.remove('active');
+      navLinks.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      hamb.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close menu if resized to desktop view
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      hamb.classList.remove('active');
+      navLinks.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      hamb.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+
+
+
+
+
+
+
+
+

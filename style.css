@@ -45,130 +45,154 @@ body {
 /* ------------------------------
    NAVBAR
 ------------------------------ */
-/* ==========================
-   NAVBAR BASE STYLES
-   ========================== */
+/* ====== GENERAL FIX FOR MOBILE ====== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevent sideways scroll */
+}
+
+
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  z-index: 1000;
-  overflow-x: hidden; /* Prevents sideways scrolling */
+  padding: 12px 20px;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 14px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  box-sizing: border-box; /* Fix overflow issue */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Logo */
 .brand {
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: #ff6b81;
   text-decoration: none;
-  white-space: nowrap;
+  color: #ff6b81;  
+  transition: color 0.3s ease;
 }
 
-/* Desktop Nav Links */
+.brand:hover {
+  color: #ff6b81;  
+}
+
+
+/* ====== DESKTOP NAVIGATION ====== */
 .nav-links {
   display: flex;
-  gap: 22px;
-  transition: all 0.3s ease-in-out;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .nav-links a {
-  text-decoration: none;
   color: #333;
+  text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
-  white-space: nowrap;
+  transition: color 0.3s;
 }
 
 .nav-links a:hover {
-  color: #ff6b81;
+  color: #007bff;
 }
 
-/* ==========================
-   HAMBURGER BUTTON
-   ========================== */
+/* ====== HAMBURGER BUTTON ====== */
 .hamb {
   display: none;
   flex-direction: column;
-  gap: 5px;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1100;
+  padding: 0;
+  z-index: 1001;
 }
 
 .hamb span {
-  width: 28px;
+  display: block;
   height: 3px;
+  width: 100%;
   background: #333;
-  border-radius: 3px;
-  transition: all 0.3s ease;
+  border-radius: 2px;
+  transition: 0.3s ease;
 }
 
-/* Hamburger Animation — Turns into X */
-.hamb.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamb.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamb.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
-}
-
-/* ==========================
-   RESPONSIVE STYLES
-   ========================== */
+/* ====== MOBILE NAVIGATION ====== */
 @media (max-width: 768px) {
-  /* Show hamburger on mobile */
   .hamb {
     display: flex;
   }
 
-  /* Hide nav links by default */
+  /* Hide nav by default */
   .nav-links {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background: white;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: -50%;
+    width: 50%; /* Take only half screen width */
+    height: 100vh;
+    background: #fff;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 25px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: none;
+    align-items: flex-start;
+    padding: 80px 20px;
+    gap: 18px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2); 
+    transition: right 0.3s ease-in-out; 
+    z-index: 1000;
   }
 
-  /* Show nav links when menu is active */
+  /* Show nav when open */
   .nav-links.open {
-    display: flex;
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 10px 0;
+    width: 100%;
+    text-decoration: none;
+    color: #222;
+    transition: 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: #007bff;
   }
 }
 
-/* ==========================
-   FIX: REMOVE SIDE SCROLLING
-   ========================== */
-html, body {
-  max-width: 100%;
-  overflow-x: hidden;
+/* ====== HAMBURGER ANIMATION ====== */
+.hamb.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+.hamb.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamb.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* ====== BACKDROP FOR MOBILE MENU ====== */
+.backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+.backdrop.show {
+  display: block;
 }
 
 
@@ -182,6 +206,7 @@ html, body {
   padding: 80px 0 80px;
   background: linear-gradient(135deg, #fff7f9, #fff);
   min-height: 100vh;
+  
 }
 
 .hero-inner {
