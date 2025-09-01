@@ -1,0 +1,10 @@
+# Editor folders
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vercel local config (created by CLI sometimes)
+.vercel
