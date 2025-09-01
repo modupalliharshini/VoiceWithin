@@ -73,12 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
 // ======================
 // HAMBURGER MENU TOGGLE
 // ======================
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("nav-links");
 
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navLinks.classList.toggle("active");
+
+const hamb = document.querySelector(".hamb");
+const navLinks = document.querySelector(".nav-links");
+
+hamb.addEventListener("click", () => {
+  navLinks.classList.toggle("open");
+  hamb.classList.toggle("active");
 });
 
 // Close navbar when clicking a link (mobile)

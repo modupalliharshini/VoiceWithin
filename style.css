@@ -45,120 +45,132 @@ body {
 /* ------------------------------
    NAVBAR
 ------------------------------ */
-/* =========================
+/* ==========================
    NAVBAR BASE STYLES
-========================= */
+   ========================== */
 .nav {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   background: #fff;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   z-index: 1000;
+  overflow-x: hidden; /* Prevents sideways scrolling */
 }
 
 .nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  box-sizing: border-box; /* Fix overflow issue */
 }
 
 /* Logo */
 .brand {
-  font-size: 22px;
-  font-weight: 700;
-  color: #222;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #ff6b81;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 /* Desktop Nav Links */
 .nav-links {
   display: flex;
-  gap: 24px;
-  transition: right 0.3s ease-in-out;
+  gap: 22px;
+  transition: all 0.3s ease-in-out;
+  flex-wrap: wrap;
 }
 
 .nav-links a {
+  text-decoration: none;
   color: #333;
   font-weight: 500;
-  text-decoration: none;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
-  color: #0077ff;
+  color: #ff6b81;
 }
 
-/* =========================
-   HAMBURGER MENU
-========================= */
+/* ==========================
+   HAMBURGER BUTTON
+   ========================== */
 .hamb {
   display: none;
   flex-direction: column;
-  justify-content: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px;
-  z-index: 2000;
+  z-index: 1100;
 }
 
-.hamb .line {
-  display: block;
+.hamb span {
   width: 28px;
   height: 3px;
-  background-color: #333;
-  border-radius: 5px;
-  transition: all 0.3s ease-in-out;
+  background: #333;
+  border-radius: 3px;
+  transition: all 0.3s ease;
 }
 
-/* Hamburger Animation - Turn into X */
-.hamb.active .line:nth-child(1) {
+/* Hamburger Animation — Turns into X */
+.hamb.active span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
 
-.hamb.active .line:nth-child(2) {
+.hamb.active span:nth-child(2) {
   opacity: 0;
 }
 
-.hamb.active .line:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+.hamb.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* =========================
-   MOBILE RESPONSIVE NAV
-========================= */
+/* ==========================
+   RESPONSIVE STYLES
+   ========================== */
 @media (max-width: 768px) {
-  .nav-links {
-    position: fixed;
-    top: 70px;
-    right: -100%;
-    flex-direction: column;
-    background-color: #fff;
-    width: 70%;
-    height: 100vh;
-    padding: 30px 20px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
-    transition: right 0.3s ease-in-out;
-    gap: 20px;
-    z-index: 1500;
-  }
-
-  .nav-links.active {
-    right: 0;
-  }
-
+  /* Show hamburger on mobile */
   .hamb {
     display: flex;
   }
+
+  /* Hide nav links by default */
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: white;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 25px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: none;
+  }
+
+  /* Show nav links when menu is active */
+  .nav-links.open {
+    display: flex;
+  }
 }
+
+/* ==========================
+   FIX: REMOVE SIDE SCROLLING
+   ========================== */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 
 /* ------------------------------
    HERO SECTION
